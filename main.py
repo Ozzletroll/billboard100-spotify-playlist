@@ -53,4 +53,28 @@ for entry in top_100:
         "artist": artist.getText().strip(),
         "title": song_title.getText().strip(),
     }
+    song_list.append(song_entry)
+
+# Create spotify playlist using scraped songs
+playlist_name = f"Billboard 100: {formatted_date}"
+playlist_desc = f"The top 100 songs as of {formatted_date}."
+
+playlist_uris = []
+
+for song in song_list:
+    query = f"{song['title']} {song['artist']}"
+    query = query.replace(" ", "%20").lower()
+    search = sp.search(
+        q=query,
+        type="track",
+    )
+    print(search)
+
+sp.user_playlist_create(
+    user=user_id,
+    name=playlist_name,
+    public=False,
+    description=playlist_desc,
+)
+
 
