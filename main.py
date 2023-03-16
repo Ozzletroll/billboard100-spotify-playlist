@@ -1,6 +1,10 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+
+CLIENT_ID = os.environ["client_id"]
+CLIENT_SECRET = os.environ["client_secret"]
 
 # Query user for the date they wish to scrape data from, and check the formatting is correct.
 get_date = True
@@ -32,4 +36,4 @@ for entry in top_100:
         "artist": artist.getText().strip(),
         "title": song_title.getText().strip(),
     }
-    print(song_entry)
+
