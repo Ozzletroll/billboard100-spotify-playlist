@@ -68,13 +68,27 @@ for song in song_list:
         q=query,
         type="track",
     )
-    print(search)
 
-sp.user_playlist_create(
+    try:
+        uri = search["tracks"]["items"][0]["uri"]
+    except IndexError:
+        print("No song found.")
+    else:
+        playlist_uris.append(uri)
+
+
+playlist = sp.user_playlist_create(
     user=user_id,
     name=playlist_name,
     public=False,
     description=playlist_desc,
+)
+
+playlist_id = playlist["id"]
+
+sp.playlist_add_items(
+    playlist_id=playlist_id,
+    items=playlist_uris,
 )
 
 
