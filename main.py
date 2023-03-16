@@ -20,3 +20,16 @@ target_url = f"https://www.billboard.com/charts/hot-100/{formatted_date}"
 response = requests.get(url=target_url)
 response.encoding = "utf-8"
 webpage = response.text
+
+# Format top 100 songs as list
+soup = BeautifulSoup(webpage, "html.parser")
+top_100 = soup.find_all(name="div", class_="o-chart-results-list-row-container")
+song_list = []
+for entry in top_100:
+    song_title = entry.find(name="h3", id="title-of-a-story")
+    artist = song_title.findNext("span")
+    song_entry = {
+        "artist": artist.getText().strip(),
+        "title": song_title.getText().strip(),
+    }
+    print(song_entry)
