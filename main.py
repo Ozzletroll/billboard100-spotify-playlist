@@ -69,6 +69,7 @@ for song in song_list:
         type="track",
     )
 
+    # Test to see if spotify actually has the songs available and append them to playlist_uris.
     try:
         uri = search["tracks"]["items"][0]["uri"]
     except IndexError:
@@ -76,7 +77,7 @@ for song in song_list:
     else:
         playlist_uris.append(uri)
 
-
+# Create playlist based on playlist_uris list
 playlist = sp.user_playlist_create(
     user=user_id,
     name=playlist_name,
@@ -85,10 +86,8 @@ playlist = sp.user_playlist_create(
 )
 
 playlist_id = playlist["id"]
-
+# Add all playlist songs to final playlist
 sp.playlist_add_items(
     playlist_id=playlist_id,
     items=playlist_uris,
 )
-
-
