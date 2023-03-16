@@ -2,9 +2,26 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 
-CLIENT_ID = os.environ["client_id"]
-CLIENT_SECRET = os.environ["client_secret"]
+# Spotify authentication
+client_id = os.environ["SPOTIPY_CLIENT_ID"]
+client_secret = os.environ["SPOTIPY_CLIENT_SECRET"]
+redirect_uri = os.environ["SPOTIPY_REDIRECT_URI"]
+
+scope = "playlist-modify-private"
+sp = spotipy.Spotify(
+    auth_manager=SpotifyOAuth(
+        scope=scope,
+        client_id=client_id,
+        client_secret=client_secret,
+        redirect_uri=redirect_uri,
+        show_dialog=True,
+    )
+)
+
+user_id = sp.current_user()["id"]
 
 # Query user for the date they wish to scrape data from, and check the formatting is correct.
 get_date = True
