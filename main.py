@@ -12,3 +12,11 @@ while get_date:
         get_date = False
     except ValueError:
         print("Date invalid")
+
+# Get webpage from Billboard 100 on target date
+formatted_date = formatted_date.date()
+target_url = f"https://www.billboard.com/charts/hot-100/{formatted_date}"
+
+response = requests.get(url=target_url)
+response.encoding = "utf-8"
+webpage = response.text
