@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+# Query user for the date they wish to scrape data from, and check the formatting is correct.
 get_date = True
 while get_date:
     date = input("Choose a date to travel back to (YYYY-MM-DD):\n")
